@@ -6,15 +6,16 @@ STRIP   := strip
 CC      := gcc
 EXE     := $(BIN_DIR)/app.exe
 SRC     := $(wildcard $(SRC_DIR)/*.c)
-CFLAGS  := -O3 -Wall -Werror -Wextra -pedantic -w -Wunused -faggressive-loop-optimizations -fanalyzer
+CFLAGS  := -march=x86-64 -O3 -Wall -Werror -Wextra -pedantic -w -Wunused -faggressive-loop-optimizations -fanalyzer
 
 all: clean | sqlite3.a
-	$(CC) $(SRC) sqlite3.a -o $(EXE) $(CFLAGS)
+	$(CC) $(CFLAGS) $(SRC) sqlite3.a -o $(EXE)
 	$(STRIP) --strip-debug $(EXE)
 	$(EXE) 
 
 sqlite3.a: 
 	$(CC) -c $(SQLITE)/sqlite3.c -o sqlite3.o
+	$(STRIP) --strip-debug sqlite3.o
 	$(AR) rcs sqlite3.a sqlite3.o
 
 clean:
