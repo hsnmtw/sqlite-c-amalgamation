@@ -20,14 +20,14 @@ void sqlite_error_check(sqlite3 *db, int rc) {
 
 int main(int argc, char **argv) {
     sqlite3 *db;
-    int rc = sqlite3_open("./db/test.sqlite3", &db);
+    int rc = sqlite3_open("test.sqlite3", &db);
     sqlite_error_check(db,rc);
 
     char **errmsg = 0;
     rc = sqlite3_exec(db,"CREATE TABLE IF NOT EXISTS TEST(ID INTEGER PRIMARY KEY, NAME TEXT);",&callback,0,errmsg);
     sqlite_error_check(db,rc);
     
-    rc = sqlite3_exec(db,"INSERT INTO TEST(name) SELECT 'HUSSAIN';",&callback,0,errmsg);
+    rc = sqlite3_exec(db,"INSERT INTO TEST(name) SELECT 'test only';",&callback,0,errmsg);
     sqlite_error_check(db,rc);
 
     rc = sqlite3_exec(db,"SELECT * from test;",&callback,0,errmsg);
